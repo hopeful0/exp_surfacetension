@@ -8,6 +8,15 @@ using namespace std;
 typedef list<double> ldouble;
 typedef ldouble::iterator ildouble;
 
+void clear_stdin(void)
+{
+	char c;
+	do
+	{
+		c = getchar();
+	}while(c != '\n' && c != EOF);
+}
+
 void ls(ldouble xs, ldouble ys, double& k, double& b,double& Sk, double& Sb, double& S, double& r)
 {
 	double ax = 0, ay = 0, axx = 0, ayy = 0, axy = 0, Q = 0;
@@ -86,6 +95,7 @@ double getUsigma(ldouble sigmas, double* p, double* Up)
 
 int main()
 {
+	printf("欢迎使用 表面张力系数数据处理程序!\n作者：hopeful from LZU\n");
 	while(1)
 	{
 		printf("==================================================\n");
@@ -93,9 +103,11 @@ int main()
 		printf("1.传感器灵敏度的测量\n");
 		printf("2.环的直径的测量\n");
 		printf("3.表面张力系数的测量\n");
+		printf("其他：退出\n");
 		printf("==================================================\n");
 		int func;
-		if(EOF == scanf("%d",&func)) break;
+		if(1 != scanf("%d",&func)) break;
+		clear_stdin();
 		switch(func)
 		{
 			case 1:
@@ -103,9 +115,9 @@ int main()
 				ldouble xs,ys;
 				for(int i = 1; i < 7; i ++)
                 			xs.push_back(i * 0.5);
-				printf("依次输入6组电压值，按Ctrl+D结束：\n");
+				printf("依次输入6组电压值，输入q结束：\n");
 				double temp;
-				while(EOF != scanf("%lf",&temp))
+				while(1 == scanf("%lf",&temp))
 					ys.push_back(temp);
 				double k,b,Sk,Sb,S,r;
 				ls(xs,ys,k,b,Sk,Sb,S,r);
@@ -116,11 +128,11 @@ int main()
 			{
 				ldouble od,id;
 				double temp,t,di;
-				printf("依次输入n组外径值D1，按Ctrl+D结束输入：\n");
-				while(EOF != scanf("%lf",&temp))
+				printf("依次输入n组外径值D1，输入q结束：\n");
+				while(1 == scanf("%lf",&temp))
 					od.push_back(temp);
-				printf("依次输入n组内径值D2，按Ctrl+D结束输入：\n");
-				while(EOF != scanf("%lf",&temp))
+				printf("依次输入n组内径值D2，输入q结束：\n");
+				while(1 == scanf("%lf",&temp))
                                         id.push_back(temp);
 				printf("输入A类不确定度的t因子：\n");
 				scanf("%lf",&t);
@@ -141,8 +153,8 @@ int main()
 				scanf("%lf %lf",&p[1],&Up[1]);
 				printf("输入环的内径及其不确定度：\n");
 				scanf("%lf %lf",&p[2],&Up[2]);
-				printf("依次输入n组U1、U2的值，用空格隔开，按Ctrl+D结束输入：\n");
-				while(EOF != scanf("%lf %lf",&temp1,&temp2))
+				printf("依次输入n组U1、U2的值，用空格隔开，输入q结束：\n");
+				while(1 > scanf("%lf %lf",&temp1,&temp2))
 				{
 					U1.push_back(temp1);
 					U2.push_back(temp2);
@@ -166,7 +178,8 @@ int main()
 				return 0;
 		}
 		printf("按回车键继续");
-		char c = getchar();
+		clear_stdin();
+		getchar();
 	}
 	return 0;
 }
