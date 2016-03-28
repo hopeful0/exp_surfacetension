@@ -3,6 +3,7 @@
 #include <math.h>
 
 #define pi 3.14159265358979
+#define g 9.8
 
 using namespace std;
 typedef list<double> ldouble;
@@ -120,14 +121,15 @@ int main()
 			{
 				ldouble xs,ys;
 				for(int i = 1; i < 7; i ++)
-                			xs.push_back(i * 0.5);
+                			ys.push_back(i * g * 0.5);
 				printf("依次输入6组电压值，输入q结束：\n");
 				double temp;
 				while(1 == scanf("%lf",&temp))
-					ys.push_back(temp);
+					xs.push_back(temp);
 				double k,b,Sk,Sb,S,r;
 				ls(xs,ys,k,b,Sk,Sb,S,r);
-				printf("输出(c = 1 / k)：\nc = %lf\nk = %lf\nU(c) = %lf\nr = %lf\n",k * 100,1/(k * 100),Sk * 100,r);
+				k *= 1000;
+				printf("输出(c = 1 / k)：\nc = %lfN/mV\nk = %lfmV/N\nU(c) = %lfN/mV\nr = %lf\n",k,1 / k,Sk * 1000,r);
 				break;
 			}
 			case 2:
@@ -145,7 +147,7 @@ int main()
 				scanf("%lf",&t);
 				printf("输入游标卡尺的极限误差：\n");
 				scanf("%lf",&di);
-				printf("环的外径：\nD1 = %lf\nU(D1) = %lf\n环的内径：\nD2 = %lf\nU(D2) = %lf\n",avg(od),getU(od,t,di),avg(id),getU(id,t,di));
+				printf("环的外径：\nD1 = %lfcm\nU(D1) = %lfcm\n环的内径：\nD2 = %lfcm\nU(D2) = %lfcm\n",avg(od),getU(od,t,di),avg(id),getU(id,t,di));
 				break;
 			}
 			case 3:
@@ -166,9 +168,9 @@ int main()
 					U1.push_back(temp1);
 					U2.push_back(temp2);
 					double dU = temp2 - temp1;
-					double f = dU * p[0];
+					double f = dU / 1000 * p[0];
 					double s = f / pi / (p[1]+p[2]);
-					printf("deltaU = %lf\nF = %lf\nsigma = %lf\n",dU,f / 100000,s / 100);
+					printf("deltaU = %lfmV\nF = %lfdyn\nsigma = %lfN/m\n",dU,f * 100000,s * 100);
 					sigma.push_back(s);
 				}
 				clear_stdin();
@@ -179,7 +181,7 @@ int main()
 				Up[3] = getU(U1,t,di);
 				p[4] = avg(U2);
 				Up[4] = getU(U2,t,di);
-				printf("sigma = %lf,U(sigma) = %lf\n",avg(sigma) / 100,getUsigma(sigma,p,Up) / 100);
+				printf("sigma = %lfN/m,U(sigma) = %lfN/m\n",avg(sigma) / 100,getUsigma(sigma,p,Up) / 100);
 				break;
 			}
 			default:
@@ -192,4 +194,3 @@ int main()
 	}
 	return over();
 }
-
