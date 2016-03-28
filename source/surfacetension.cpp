@@ -143,6 +143,7 @@ int main()
 				printf("依次输入n组内径值D2，输入q结束：\n");
 				while(1 == scanf("%lf",&temp))
                                         id.push_back(temp);
+				clear_stdin();
 				printf("输入A类不确定度的t因子：\n");
 				scanf("%lf",&t);
 				printf("输入游标卡尺的极限误差：\n");
@@ -181,14 +182,13 @@ int main()
 				Up[3] = getU(U1,t,di);
 				p[4] = avg(U2);
 				Up[4] = getU(U2,t,di);
-				printf("sigma = %lfN/m,U(sigma) = %lfN/m\n",avg(sigma) / 100,getUsigma(sigma,p,Up) / 100);
+				printf("sigma = %lfN/m,U(sigma) = %lfN/m\n",avg(sigma) * 100,getUsigma(sigma,p,Up) * 100);
 				break;
 			}
 			default:
 				return over();
 		}
 		printf("按回车键继续");
-		clear_stdin();
 		getchar();
 		clear_stdin();
 	}
